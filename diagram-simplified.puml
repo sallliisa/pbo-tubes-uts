@@ -1,0 +1,199 @@
+@startuml
+hide circle
+skinparam linetype ortho
+
+class Department {
+  - departmentId: int
+  - name: String
+  + Department()
+  + getDepartmentId(): int
+  + getName(): String
+  + setName(): void
+  + addEmployee(): void
+  + removeEmployee(): void
+  + assignManager(): void
+  + addPosition(): void
+  + getEmployeeCount(): int
+}
+
+abstract class Employee {
+  - employeeId: int
+  - firstName: String
+  - lastName: String
+  - email: String
+  - hireDate: Date
+  - salary: Decimal
+  + Employee()
+  + getEmployeeId(): int
+  + getFullName(): String
+  + getEmail(): String
+  + setEmail(): void
+  + getHireDate(): Date
+  + getSalary(): Decimal
+  + updateSalary(): void
+  + assignPosition(): void
+  + createTimesheet(): Timesheet
+  + calculateCompensation(): Decimal
+}
+
+class PermanentEmployee {
+  - benefitPlan: String
+  - annualLeaveQuota: int
+  + PermanentEmployee()
+  + getBenefitPlan(): String
+  + updateBenefitPlan(): void
+  + getAnnualLeaveQuota(): int
+  + requestLeave(): boolean
+  + calculateCompensation(): Decimal
+}
+
+class ContractEmployee {
+  - contractStartDate: Date
+  - contractEndDate: Date
+  - hourlyRate: Decimal
+  + ContractEmployee()
+  + getContractDuration(): int
+  + extendContract(): void
+  + updateHourlyRate(): void
+  + isContractActive(): boolean
+  + calculateCompensation(): Decimal
+}
+
+class Position {
+  - positionId: int
+  - title: String
+  - level: String
+  - minSalary: Decimal
+  - maxSalary: Decimal
+  - description: String
+  + Position()
+  + getTitle(): String
+  + setDescription(): void
+  + isSalaryInRange(): boolean
+  + updateSalaryRange(): void
+}
+
+class Client {
+  - clientId: int
+  - name: String
+  - industry: String
+  - contactName: String
+  - contactEmail: String
+  - contactPhone: String
+  + Client()
+  + getClientId(): int
+  + getName(): String
+  + updateContact(): void
+  + addProject(): void
+  + getActiveProjects(): List<Project>
+}
+
+class Project {
+  - projectId: int
+  - name: String
+  - description: String
+  - startDate: Date
+  - endDate: Date
+  - status: String
+  - budget: Decimal
+  + Project()
+  + getProjectId(): int
+  + getName(): String
+  + updateSchedule(): void
+  + updateBudget(): void
+  + changeStatus(): void
+  + assignEmployee(): ProjectAssignment
+  + addContract(): void
+  + addInvoice(): void
+  + getTotalBilledAmount(): Decimal
+}
+
+class Contract {
+  - contractId: int
+  - title: String
+  - contractDate: Date
+  - status: String
+  - notes: String
+  - contractNumber: String
+  - startDate: Date
+  - endDate: Date
+  - value: Decimal
+  - terms: String
+  + Contract()
+  + activate(): void
+  + terminate(): void
+  + renew(): void
+  + isActive(): boolean
+  + getContractValue(): Decimal
+}
+
+class ProjectAssignment {
+  - assignmentStartDate: Date
+  - assignmentEndDate: Date
+  - roleOnProject: String
+  + ProjectAssignment()
+  + updateRole(): void
+  + updateAssignmentPeriod(): void
+  + isActive(): boolean
+  + getAssignmentDuration(): int
+}
+
+class Timesheet {
+  - timesheetId: int
+  - periodStart: Date
+  - periodEnd: Date
+  - status: String
+  + Timesheet()
+  + addEntry(): void
+  + removeEntry(): void
+  + submit(): void
+  + approve(): void
+  + reject(): void
+  + getTotalHours(): Decimal
+  + getBillableHours(): Decimal
+}
+
+class TimesheetEntry {
+  - entryId: int
+  - workDate: Date
+  - hours: Decimal
+  - billable: boolean
+  - notes: String
+  + TimesheetEntry()
+  + updateHours(): void
+  + markBillable(): void
+  + markNonBillable(): void
+  + getHours(): Decimal
+}
+
+class Invoice {
+  - invoiceId: int
+  - title: String
+  - invoiceDate: Date
+  - status: String
+  - notes: String
+  - amount: Decimal
+  + Invoice()
+  + generateFromTimesheet(): void
+  + markSent(): void
+  + markPaid(): void
+  + cancel(): void
+  + getAmount(): Decimal
+}
+
+Department "1" o-- "0..*" Employee : employees
+Department "0..1" --> "0..1" Employee : manager
+Department "1" o-- "0..*" Position : positions
+Employee <|-- PermanentEmployee
+Employee <|-- ContractEmployee
+Employee "0..*" --> "1" Position : holds
+Client "1" o-- "0..*" Project : projects
+Employee "1" -- "0..*" ProjectAssignment : assignments
+Project "1" *-- "0..*" ProjectAssignment : staffing
+Employee "1" -- "0..*" Timesheet : submits
+Project "1" -- "0..*" Timesheet : records
+Timesheet "1" *-- "1..*" TimesheetEntry : entries
+Project "1" *-- "0..*" Invoice : invoices
+Project "1" *-- "0..*" Contract : contracts
+
+@enduml

@@ -1,6 +1,8 @@
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+import exceptions.AssignmentException;
+
 public class ProjectAssignment {
     private LocalDate assignmentStartDate;
     private LocalDate assignmentEndDate;
@@ -21,6 +23,12 @@ public class ProjectAssignment {
 
     public void updateAssignmentPeriod(LocalDate startDate, LocalDate endDate) {
         Validation.requireDateOrder(startDate, endDate, "assignment dates");
+        if (endDate.isBefore(LocalDate.now())) {
+            throw new AssignmentException(
+                "Cannot update an assignment that has already ended"
+            );
+        }
+
         assignmentStartDate = startDate;
         assignmentEndDate = endDate;
     }

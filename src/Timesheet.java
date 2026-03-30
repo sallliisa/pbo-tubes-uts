@@ -3,6 +3,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import exceptions.InvalidTimesheetStateException;
+
 public class Timesheet {
     private final int timesheetId;
     private final LocalDate periodStart;
@@ -23,27 +25,61 @@ public class Timesheet {
 
     public void addEntry(TimesheetEntry entry) {
         Validation.requireNonNull(entry, "entry");
+
+        if (status != TimesheetStatus.Draft) {
+            throw new InvalidTimesheetStateException(
+                "Cannot modify timesheet unless it is in Draft state"
+            );
+        }
+
         entries.add(entry);
     }
 
     public void removeEntry(int entryId) {
+        if (status != TimesheetStatus.Draft) {
+            throw new InvalidTimesheetStateException(
+                "Cannot modify timesheet unless it is in Draft state"
+            );
+        }
+
         entries.removeIf(entry -> entry.getEntryId() == entryId);
     }
 
     public void submit() {
         if (entries.isEmpty()) {
-            throw new IllegalStateException("Cannot submit an empty timesheet.");
+            throw new InvalidTimesheetStateException(
+                "Cannot submit empty timesheet"
+            );
         }
+
+        if (status != TimesheetStatus.Draft) {
+            throw new InvalidTimesheetStateException(
+                "Only draft timesheet can be submitted"
+            );
+        }
+
         status = TimesheetStatus.Submitted;
         rejectionReason = null;
     }
 
     public void approve() {
+        if (status != TimesheetStatus.Submitted) {
+            throw new InvalidTimesheetStateException(
+                "Only submitted timesheet can be approved"
+            );
+        }
+
         status = TimesheetStatus.Approved;
         rejectionReason = null;
     }
 
     public void reject(String reason) {
+        if (status != TimesheetStatus.Submitted) {
+            throw new InvalidTimesheetStateException(
+                "Only submitted timesheet can be rejected"
+            );
+        }
+
         status = TimesheetStatus.Rejected;
         rejectionReason = Validation.requireNonBlank(reason, "reason");
     }
@@ -62,6 +98,10 @@ public class Timesheet {
     }
 
     void attachOwner(Employee employee, Project project) {
+        if (this.employee != null || this.project != null) {
+            throw new InvalidTimesheetStateException("Already attached");
+        }
+
         this.employee = Validation.requireNonNull(employee, "employee");
         this.project = Validation.requireNonNull(project, "project");
     }

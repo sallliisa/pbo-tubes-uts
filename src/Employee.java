@@ -59,7 +59,13 @@ public abstract class Employee {
     }
 
     public void updateSalary(BigDecimal newSalary) {
-        this.salary = Validation.requireNonNegative(newSalary, "newSalary");
+        if (position != null && !position.isSalaryInRange(newSalary)) {
+            throw new IllegalArgumentException(
+                "New salary is outside the assigned position range"
+            );
+        }
+
+        this.salary = newSalary;
     }
 
     public void assignPosition(Position position) {

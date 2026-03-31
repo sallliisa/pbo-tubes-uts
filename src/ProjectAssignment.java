@@ -46,4 +46,12 @@ public class ProjectAssignment {
         this.employee = Validation.requireNonNull(employee, "employee");
         this.project = Validation.requireNonNull(project, "project");
     }
+
+    public void printInfo() {
+        System.out.println("Assignment Start Date: " + assignmentStartDate);
+        System.out.println("Assignment End Date: " + assignmentEndDate);
+        System.out.println("Role on Project: " + roleOnProject);
+        System.out.println("Employee: " + (employee != null ? employee.getFullName() : "-"));
+        System.out.println("Project: " + (project != null ? project.getName() : "-"));
+    }
 }

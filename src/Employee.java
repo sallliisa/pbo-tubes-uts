@@ -90,6 +90,18 @@ public abstract class Employee {
         return timesheet;
     }
 
+    public void printInfo() {
+        System.out.println("Employee ID: " + employeeId);
+        System.out.println("Name: " + getFullName());
+        System.out.println("Email: " + email);
+        System.out.println("Hire Date: " + hireDate);
+        System.out.println("Salary: " + salary);
+        System.out.println("Position: " + (position != null ? position.getTitle() : "-"));
+        System.out.println("Department: " + (department != null ? department.getName() : "-"));
+        System.out.println("Assignments: " + assignments.size());
+        System.out.println("Timesheets: " + timesheets.size());
+    }
+
     public abstract BigDecimal calculateCompensation();
 
     void addAssignment(ProjectAssignment assignment) {

@@ -60,4 +60,13 @@ public class Invoice {
     public BigDecimal getAmount() {
         return amount;
     }
+
+    public void printInfo() {
+        System.out.println("Invoice ID: " + invoiceId);
+        System.out.println("Title: " + title);
+        System.out.println("Invoice Date: " + invoiceDate);
+        System.out.println("Status: " + status);
+        System.out.println("Amount: " + amount);
+        System.out.println("Notes: " + notes);
+    }
 }

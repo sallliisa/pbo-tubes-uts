@@ -43,6 +43,13 @@ public class PermanentEmployee extends Employee {
     }
 
     @Override
+    public void printInfo() {
+        super.printInfo();
+        System.out.println("Benefit Plan: " + benefitPlan);
+        System.out.println("Annual Leave Quota: " + annualLeaveQuota);
+    }
+
+    @Override
     public BigDecimal calculateCompensation() {
         return getSalary().add(new BigDecimal("1000"));
     }

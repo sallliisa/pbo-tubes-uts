@@ -118,4 +118,19 @@ public class Project {
             timesheets.add(timesheet);
         }
     }
+
+    public void printInfo() {
+        System.out.println("Project ID: " + projectId);
+        System.out.println("Name: " + name);
+        System.out.println("Description: " + description);
+        System.out.println("Start Date: " + startDate);
+        System.out.println("End Date: " + endDate);
+        System.out.println("Status: " + status);
+        System.out.println("Budget: " + budget);
+        System.out.println("Client: " + (client != null ? client.getName() : "-"));
+        System.out.println("Staffing Count: " + staffing.size());
+        System.out.println("Contracts: " + contracts.size());
+        System.out.println("Invoices: " + invoices.size());
+        System.out.println("Timesheets: " + timesheets.size());
+    }
 }

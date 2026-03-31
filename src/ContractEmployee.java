@@ -51,6 +51,14 @@ public class ContractEmployee extends Employee {
     }
 
     @Override
+    public void printInfo() {
+        super.printInfo();
+        System.out.println("Contract Start Date: " + contractStartDate);
+        System.out.println("Contract End Date: " + contractEndDate);
+        System.out.println("Hourly Rate: " + hourlyRate);
+    }
+
+    @Override
     public BigDecimal calculateCompensation() {
         return getSalary();
     }

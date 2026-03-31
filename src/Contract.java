@@ -79,4 +79,17 @@ public class Contract {
     public BigDecimal getContractValue() {
         return value;
     }
+
+    public void printInfo() {
+        System.out.println("Contract ID: " + contractId);
+        System.out.println("Title: " + title);
+        System.out.println("Contract Date: " + contractDate);
+        System.out.println("Status: " + status);
+        System.out.println("Contract Number: " + contractNumber);
+        System.out.println("Start Date: " + startDate);
+        System.out.println("End Date: " + endDate);
+        System.out.println("Value: " + value);
+        System.out.println("Terms: " + terms);
+        System.out.println("Notes: " + notes);
+    }
 }

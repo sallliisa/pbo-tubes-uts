@@ -45,4 +45,13 @@ public class Position {
         this.minSalary = checkedMinSalary;
         this.maxSalary = checkedMaxSalary;
     }
+
+    public void printInfo() {
+        System.out.println("Position ID: " + positionId);
+        System.out.println("Title: " + title);
+        System.out.println("Level: " + level);
+        System.out.println("Min Salary: " + minSalary);
+        System.out.println("Max Salary: " + maxSalary);
+        System.out.println("Description: " + description);
+    }
 }

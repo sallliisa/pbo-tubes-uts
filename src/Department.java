@@ -65,4 +65,12 @@ public class Department {
     public int getEmployeeCount() {
         return employees.size();
     }
+
+    public void printInfo() {
+        System.out.println("Department ID: " + departmentId);
+        System.out.println("Name: " + name);
+        System.out.println("Employee Count: " + employees.size());
+        System.out.println("Position Count: " + positions.size());
+        System.out.println("Manager: " + (manager != null ? manager.getFullName() : "-"));
+    }
 }

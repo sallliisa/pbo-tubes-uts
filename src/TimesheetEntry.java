@@ -36,7 +36,15 @@ public class TimesheetEntry {
         return entryId;
     }
 
+    public LocalDate getWorkDate() {
+        return workDate;
+    }
+
     public boolean isBillable() {
         return billable;
+    }
+
+    public String getNotes() {
+        return notes;
     }
 }

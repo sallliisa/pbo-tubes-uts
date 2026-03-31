@@ -52,4 +52,14 @@ public class Client {
             .filter(project -> project.getStatus() == ProjectStatus.Active)
             .collect(Collectors.toUnmodifiableList());
     }
+
+    public void printInfo() {
+        System.out.println("Client ID: " + clientId);
+        System.out.println("Name: " + name);
+        System.out.println("Industry: " + industry);
+        System.out.println("Contact Name: " + contactName);
+        System.out.println("Contact Email: " + contactEmail);
+        System.out.println("Contact Phone: " + contactPhone);
+        System.out.println("Projects: " + projects.size());
+    }
 }

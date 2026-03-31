@@ -105,4 +105,33 @@ public class Timesheet {
         this.employee = Validation.requireNonNull(employee, "employee");
         this.project = Validation.requireNonNull(project, "project");
     }
+
+    public void printInfo() {
+        System.out.println("Timesheet ID: " + timesheetId);
+        System.out.println("Period Start: " + periodStart);
+        System.out.println("Period End: " + periodEnd);
+        System.out.println("Status: " + status);
+        System.out.println("Employee: " + (employee != null ? employee.getFullName() : "-"));
+        System.out.println("Project: " + (project != null ? project.getName() : "-"));
+        System.out.println("Total Hours: " + getTotalHours());
+        System.out.println("Billable Hours: " + getBillableHours());
+        if (rejectionReason != null) {
+            System.out.println("Rejection Reason: " + rejectionReason);
+        }
+        System.out.println("Entries:");
+        if (entries.isEmpty()) {
+            System.out.println("- None");
+            return;
+        }
+
+        for (TimesheetEntry entry : entries) {
+            System.out.println(
+                "- Entry ID: " + entry.getEntryId()
+                    + ", Work Date: " + entry.getWorkDate()
+                    + ", Hours: " + entry.getHours()
+                    + ", Billable: " + entry.isBillable()
+                    + ", Notes: " + entry.getNotes()
+            );
+        }
+    }
 }

@@ -37,19 +37,21 @@ public class Department {
         Employee employee = employees.stream()
             .filter(item -> item.getEmployeeId() == employeeId)
             .findFirst()
-            .orElse(null);
-        if (employee != null) {
-            employees.remove(employee);
-            employee.setDepartment(null);
-            if (employee.equals(manager)) {
-                manager = null;
-            }
+            .orElseThrow(() -> new IllegalArgumentException("Employee not found in department"));
+        
+        employees.remove(employee);
+        employee.setDepartment(null);
+        if (employee.equals(manager)) {
+            manager = null;
         }
     }
 
     public void assignManager(Employee manager) {
         Validation.requireNonNull(manager, "manager");
-        addEmployee(manager);
+        if (!employees.contains(manager)) {
+            throw new IllegalArgumentException("Manager must be an employee of the department.");
+        }
+
         this.manager = manager;
     }
 

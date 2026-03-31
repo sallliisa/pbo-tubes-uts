@@ -32,13 +32,14 @@ public class PermanentEmployee extends Employee {
         return annualLeaveQuota;
     }
 
-    public boolean requestLeave(int days) {
-        Validation.requireNonNegative(days, "days");
+    public void requestLeave(int days) {
+        if (days <= 0) {
+            throw new IllegalArgumentException("Days must be positive.");
+        }
         if (days > annualLeaveQuota) {
-            return false;
+            throw new IllegalArgumentException("Requested leave days exceed the available quota.");
         }
         annualLeaveQuota -= days;
-        return true;
     }
 
     @Override

@@ -50,6 +50,11 @@ public class PermanentEmployee extends Employee {
     }
 
     @Override
+    public String getEmployeeType() {
+        return "Permanent Employee";
+    }
+
+    @Override
     public BigDecimal calculateCompensation() {
         return getSalary().add(new BigDecimal("1000"));
     }

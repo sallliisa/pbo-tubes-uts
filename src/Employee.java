@@ -102,6 +102,8 @@ public abstract class Employee {
         System.out.println("Timesheets: " + timesheets.size());
     }
 
+    public abstract String getEmployeeType();
+
     public abstract BigDecimal calculateCompensation();
 
     void addAssignment(ProjectAssignment assignment) {

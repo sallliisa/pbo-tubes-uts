@@ -35,6 +35,16 @@ public class Timesheet {
         entries.add(entry);
     }
 
+    public void addEntry(
+        int entryId,
+        LocalDate workDate,
+        BigDecimal hours,
+        boolean billable,
+        String notes
+    ) {
+        addEntry(new TimesheetEntry(entryId, workDate, hours, billable, notes));
+    }
+
     public void removeEntry(int entryId) {
         if (status != TimesheetStatus.Draft) {
             throw new InvalidTimesheetStateException(

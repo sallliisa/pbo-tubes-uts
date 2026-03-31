@@ -41,8 +41,7 @@ public class App {
                 LocalDate.of(2025, 1, 1),
                 new BigDecimal("7000.00"),
                 LocalDate.of(2026, 1, 31),
-                LocalDate.of(2026, 12, 1),
-                new BigDecimal("50.00")
+                LocalDate.of(2026, 12, 1)
             );
 
             consultant.assignPosition(seniorConsultant);

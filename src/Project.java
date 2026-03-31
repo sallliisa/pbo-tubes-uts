@@ -96,6 +96,32 @@ public class Project {
         }
     }
 
+    public Contract addContract(
+        int contractId,
+        String title,
+        LocalDate contractDate,
+        String notes,
+        String contractNumber,
+        LocalDate startDate,
+        LocalDate endDate,
+        BigDecimal value,
+        String terms
+    ) {
+        Contract contract = new Contract(
+            contractId,
+            title,
+            contractDate,
+            notes,
+            contractNumber,
+            startDate,
+            endDate,
+            value,
+            terms
+        );
+        addContract(contract);
+        return contract;
+    }
+
     public void addInvoice(Invoice invoice) {
         Validation.requireNonNull(invoice, "invoice");
         if (!invoices.contains(invoice)) {

@@ -35,6 +35,11 @@ public class Invoice {
         status = InvoiceStatus.Generated;
     }
 
+    public void generateFromTimesheet(Timesheet timesheet, BigDecimal rate, String notes) {
+        this.notes = Validation.requireNonBlank(notes, "notes");
+        generateFromTimesheet(timesheet, rate);
+    }
+
     public void markSent() {
         if (status != InvoiceStatus.Generated) {
             throw new InvalidInvoiceStateException("Only a generated invoice can be marked as sent.");

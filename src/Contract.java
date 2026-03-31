@@ -69,6 +69,10 @@ public class Contract {
         status = ContractStatus.Renewed;
     }
 
+    public void renew(LocalDate newEndDate) {
+        renew(newEndDate, value);
+    }
+
     public boolean isActive(LocalDate onDate) {
         Validation.requireNonNull(onDate, "onDate");
         return status == ContractStatus.Active

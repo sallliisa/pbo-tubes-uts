@@ -5,7 +5,6 @@ import java.time.temporal.ChronoUnit;
 public class ContractEmployee extends Employee {
     private LocalDate contractStartDate;
     private LocalDate contractEndDate;
-    private BigDecimal hourlyRate;
 
     public ContractEmployee(
         int employeeId,
@@ -15,14 +14,12 @@ public class ContractEmployee extends Employee {
         LocalDate hireDate,
         BigDecimal salary,
         LocalDate contractStartDate,
-        LocalDate contractEndDate,
-        BigDecimal hourlyRate
+        LocalDate contractEndDate
     ) {
         super(employeeId, firstName, lastName, email, hireDate, salary);
         this.contractStartDate = Validation.requireNonNull(contractStartDate, "contractStartDate");
         this.contractEndDate = Validation.requireNonNull(contractEndDate, "contractEndDate");
         Validation.requireDateOrder(contractStartDate, contractEndDate, "contract dates");
-        this.hourlyRate = Validation.requireNonNegative(hourlyRate, "hourlyRate");
     }
 
     public int getContractDuration() {
@@ -37,17 +34,9 @@ public class ContractEmployee extends Employee {
         contractEndDate = newEndDate;
     }
 
-    public void updateHourlyRate(BigDecimal hourlyRate) {
-        this.hourlyRate = Validation.requireNonNegative(hourlyRate, "hourlyRate");
-    }
-
     public boolean isContractActive(LocalDate onDate) {
         Validation.requireNonNull(onDate, "onDate");
         return !onDate.isBefore(contractStartDate) && !onDate.isAfter(contractEndDate);
-    }
-
-    public BigDecimal calculateCompensation(BigDecimal totalHours) {
-        return hourlyRate.multiply(Validation.requireNonNegative(totalHours, "totalHours"));
     }
 
     @Override
@@ -55,7 +44,11 @@ public class ContractEmployee extends Employee {
         super.printInfo();
         System.out.println("Contract Start Date: " + contractStartDate);
         System.out.println("Contract End Date: " + contractEndDate);
-        System.out.println("Hourly Rate: " + hourlyRate);
+    }
+
+    @Override
+    public String getEmployeeType() {
+        return "Contract Employee";
     }
 
     @Override

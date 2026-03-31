@@ -19,11 +19,11 @@ class Contract {
   -value: BigDecimal
   -terms: String
   --
-  +Contract(contractId: int, title: String, contractDate: LocalDate, notes: String, contractNumber: String, startDate: LocalDate, endDate: LocalDate, value: BigDecimal, terms: String)
+  +Contract()
   +activate(): void
-  +terminate(notes: String): void
-  +renew(newEndDate: LocalDate, newValue: BigDecimal): void
-  +isActive(onDate: LocalDate): boolean
+  +terminate(): void
+  +renew(): void
+  +isActive(): boolean
   +getContractValue(): BigDecimal
   +printInfo(): void
 }
@@ -38,15 +38,15 @@ class Timesheet {
   -employee: Employee
   -project: Project
   --
-  +Timesheet(timesheetId: int, periodStart: LocalDate, periodEnd: LocalDate, status: TimesheetStatus)
-  +addEntry(entry: TimesheetEntry): void
-  +removeEntry(entryId: int): void
+  +Timesheet()
+  +addEntry(): void
+  +removeEntry(): void
   +submit(): void
   +approve(): void
-  +reject(reason: String): void
+  +reject(): void
   +getTotalHours(): BigDecimal
   +getBillableHours(): BigDecimal
-  ~attachOwner(employee: Employee, project: Project): void
+  ~attachOwner(): void
   +printInfo(): void
 }
 
@@ -59,11 +59,11 @@ class Client {
   -contactPhone: String
   -projects: List<Project> = new ArrayList<>()
   --
-  +Client(clientId: int, name: String, industry: String, contactName: String, contactEmail: String, contactPhone: String)
+  +Client()
   +getClientId(): int
   +getName(): String
-  +updateContact(contactName: String, contactEmail: String, contactPhone: String): void
-  +addProject(project: Project): void
+  +updateContact(): void
+  +addProject(): void
   +getActiveProjects(): List<Project>
   +printInfo(): void
 }
@@ -72,11 +72,11 @@ class PermanentEmployee {
   -benefitPlan: String
   -annualLeaveQuota: int
   --
-  +PermanentEmployee(employeeId: int, firstName: String, lastName: String, email: String, hireDate: LocalDate, salary: BigDecimal, benefitPlan: String, annualLeaveQuota: int)
+  +PermanentEmployee()
   +getBenefitPlan(): String
-  +updateBenefitPlan(benefitPlan: String): void
+  +updateBenefitPlan(): void
   +getAnnualLeaveQuota(): int
-  +requestLeave(days: int): void
+  +requestLeave(): void
   +printInfo(): void
   +calculateCompensation(): BigDecimal
 }
@@ -89,11 +89,11 @@ class Invoice {
   -notes: String
   -amount: BigDecimal
   --
-  +Invoice(invoiceId: int, title: String, invoiceDate: LocalDate, notes: String, amount: BigDecimal)
-  +generateFromTimesheet(timesheet: Timesheet, rate: BigDecimal): void
+  +Invoice()
+  +generateFromTimesheet(): void
   +markSent(): void
   +markPaid(): void
-  +cancel(notes: String): void
+  +cancel(): void
   +getAmount(): BigDecimal
   +printInfo(): void
 }
@@ -105,14 +105,14 @@ class Department {
   -positions: List<Position> = new ArrayList<>()
   -manager: Employee
   --
-  +Department(departmentId: int, name: String)
+  +Department()
   +getDepartmentId(): int
   +getName(): String
-  +setName(name: String): void
-  +addEmployee(employee: Employee): void
-  +removeEmployee(employeeId: int): void
-  +assignManager(manager: Employee): void
-  +addPosition(position: Position): void
+  +setName(): void
+  +addEmployee(): void
+  +removeEmployee(): void
+  +assignManager(): void
+  +addPosition(): void
   +getEmployeeCount(): int
   +printInfo(): void
 }
@@ -125,11 +125,11 @@ class Position {
   -maxSalary: BigDecimal
   -description: String
   --
-  +Position(positionId: int, title: String, level: String, minSalary: BigDecimal, maxSalary: BigDecimal, description: String)
+  +Position()
   +getTitle(): String
-  +setDescription(description: String): void
-  +isSalaryInRange(salary: BigDecimal): boolean
-  +updateSalaryRange(minSalary: BigDecimal, maxSalary: BigDecimal): void
+  +setDescription(): void
+  +isSalaryInRange(): boolean
+  +updateSalaryRange(): void
   +printInfo(): void
 }
 
@@ -140,8 +140,8 @@ class TimesheetEntry {
   -billable: boolean
   -notes: String
   --
-  +TimesheetEntry(entryId: int, workDate: LocalDate, hours: BigDecimal, billable: boolean, notes: String)
-  +updateHours(hours: BigDecimal): void
+  +TimesheetEntry()
+  +updateHours(): void
   +markBillable(): void
   +markNonBillable(): void
   +getHours(): BigDecimal
@@ -158,12 +158,12 @@ class ProjectAssignment {
   -employee: Employee
   -project: Project
   --
-  +ProjectAssignment(assignmentStartDate: LocalDate, assignmentEndDate: LocalDate, roleOnProject: String)
-  +updateRole(roleOnProject: String): void
-  +updateAssignmentPeriod(startDate: LocalDate, endDate: LocalDate): void
-  +isActive(onDate: LocalDate): boolean
+  +ProjectAssignment()
+  +updateRole(): void
+  +updateAssignmentPeriod(): void
+  +isActive(): boolean
   +getAssignmentDuration(): int
-  ~attach(employee: Employee, project: Project): void
+  ~attach(): void
   +printInfo(): void
 }
 
@@ -181,20 +181,20 @@ class Project {
   -invoices: List<Invoice> = new ArrayList<>()
   -timesheets: List<Timesheet> = new ArrayList<>()
   --
-  +Project(projectId: int, name: String, description: String, startDate: LocalDate, endDate: LocalDate, status: ProjectStatus, budget: BigDecimal)
+  +Project()
   +getProjectId(): int
   +getName(): String
   +getStatus(): ProjectStatus
-  +updateSchedule(startDate: LocalDate, endDate: LocalDate): void
-  +updateBudget(budget: BigDecimal): void
-  +changeStatus(status: ProjectStatus): void
-  +assignEmployee(employee: Employee, role: String): ProjectAssignment
-  +assignEmployee(employee: Employee, roleOnProject: String, assignmentStartDate: LocalDate, assignmentEndDate: LocalDate): ProjectAssignment
-  +addContract(contract: Contract): void
-  +addInvoice(invoice: Invoice): void
+  +updateSchedule(): void
+  +updateBudget(): void
+  +changeStatus(): void
+  +assignEmployee(): ProjectAssignment
+  +assignEmployee(): ProjectAssignment
+  +addContract(): void
+  +addInvoice(): void
   +getTotalBilledAmount(): BigDecimal
-  ~setClient(client: Client): void
-  ~addTimesheetRecord(timesheet: Timesheet): void
+  ~setClient(): void
+  ~addTimesheetRecord(): void
   +printInfo(): void
 }
 
@@ -203,12 +203,12 @@ class ContractEmployee {
   -contractEndDate: LocalDate
   -hourlyRate: BigDecimal
   --
-  +ContractEmployee(employeeId: int, firstName: String, lastName: String, email: String, hireDate: LocalDate, salary: BigDecimal, contractStartDate: LocalDate, contractEndDate: LocalDate, hourlyRate: BigDecimal)
+  +ContractEmployee()
   +getContractDuration(): int
-  +extendContract(newEndDate: LocalDate): void
-  +updateHourlyRate(hourlyRate: BigDecimal): void
-  +isContractActive(onDate: LocalDate): boolean
-  +calculateCompensation(totalHours: BigDecimal): BigDecimal
+  +extendContract(): void
+  +updateHourlyRate(): void
+  +isContractActive(): boolean
+  +calculateCompensation(): BigDecimal
   +printInfo(): void
   +calculateCompensation(): BigDecimal
 }
@@ -226,20 +226,20 @@ abstract class Employee {
   -assignments: List<ProjectAssignment> = new ArrayList<>()
   -timesheets: List<Timesheet> = new ArrayList<>()
   --
-  +Employee(employeeId: int, firstName: String, lastName: String, email: String, hireDate: LocalDate, salary: BigDecimal)
+  +Employee()
   +getEmployeeId(): int
   +getFullName(): String
   +getEmail(): String
-  +setEmail(email: String): void
+  +setEmail(): void
   +getHireDate(): LocalDate
   +getSalary(): BigDecimal
-  +updateSalary(newSalary: BigDecimal): void
-  +assignPosition(position: Position): void
-  +createTimesheet(project: Project, periodStart: LocalDate, periodEnd: LocalDate): Timesheet
+  +updateSalary(): void
+  +assignPosition(): void
+  +createTimesheet(): Timesheet
   +printInfo(): void
   +calculateCompensation(): BigDecimal
-  ~addAssignment(assignment: ProjectAssignment): void
-  ~setDepartment(department: Department): void
+  ~addAssignment(): void
+  ~setDepartment(): void
 }
 
 Timesheet o-- TimesheetEntry

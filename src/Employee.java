@@ -2,10 +2,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Employee {
-    private static final AtomicInteger TIMESHEET_SEQUENCE = new AtomicInteger(1);
+    private static Integer TIMESHEET_SEQUENCE = 1;
 
     private final int employeeId;
     private final String firstName;
@@ -79,7 +78,7 @@ public abstract class Employee {
     public Timesheet createTimesheet(Project project, LocalDate periodStart, LocalDate periodEnd) {
         Validation.requireNonNull(project, "project");
         Timesheet timesheet = new Timesheet(
-            TIMESHEET_SEQUENCE.getAndIncrement(),
+            TIMESHEET_SEQUENCE,
             periodStart,
             periodEnd,
             TimesheetStatus.Draft
@@ -87,6 +86,7 @@ public abstract class Employee {
         timesheet.attachOwner(this, project);
         timesheets.add(timesheet);
         project.addTimesheetRecord(timesheet);
+        TIMESHEET_SEQUENCE++;
         return timesheet;
     }
 

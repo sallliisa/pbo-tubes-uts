@@ -308,6 +308,9 @@ public class App {
         } catch (Exception e) {
             System.out.println("An unexpected error occurred: " + e.getMessage());
             e.printStackTrace();
+        } finally {
+            System.out.println();
+            System.out.println("=== End of Program ===");
         }
     }
 

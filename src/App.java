@@ -245,7 +245,7 @@ public class App {
                     LocalDate.of(2026, 12, 31),
                     new BigDecimal("180000.00"),
                     "Monthly billing based on approved billable work");
-            masterServicesAgreement.activate();
+            masterServicesAgreement.sign("Legal Counsel");
             System.out.println(
                     "MSA active on 2026-05-01 before renewal: "
                             + masterServicesAgreement.isActive(LocalDate.of(2026, 5, 1)));
@@ -271,7 +271,7 @@ public class App {
                     new BigDecimal("25000.00"),
                     "Covers executive dashboard enhancement");
             transformation.addContract(changeOrder);
-            changeOrder.activate();
+            changeOrder.sign("Engagement Director");
             changeOrder.terminate("Scope absorbed into renewed master agreement");
             printPadding();
             changeOrder.printInfo();
@@ -289,6 +289,7 @@ public class App {
             transformation.addInvoice(invoice);
             invoice.generateFromTimesheet(approvedTimesheet, new BigDecimal("150.00"));
             invoice.setNotes("Generated from approved March consultant timesheet");
+            invoice.sign("Finance Lead");
             invoice.markSent();
             invoice.markPaid();
             printPadding();

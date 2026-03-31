@@ -3,7 +3,7 @@ import java.time.LocalDate;
 
 import exceptions.InvalidContractStateException;
 
-public class Contract {
+public class Contract implements Signable {
     private final int contractId;
     private final String title;
     private final LocalDate contractDate;
@@ -14,6 +14,9 @@ public class Contract {
     private LocalDate endDate;
     private BigDecimal value;
     private String terms;
+    private boolean signed;
+    private String signedBy;
+    private LocalDate signedAt;
 
     public Contract(
         int contractId,
@@ -37,13 +40,28 @@ public class Contract {
         this.endDate = endDate;
         this.value = Validation.requireNonNegative(value, "value");
         this.terms = Validation.requireNonBlank(terms, "terms");
+        this.signed = false;
     }
 
-    public void activate() {
+    @Override
+    public void sign(String signer) {
         if (status != ContractStatus.Draft) {
-            throw new InvalidContractStateException("Only a draft contract can be activated.");
+            throw new InvalidContractStateException("Only a draft contract can be signed.");
         }
+
+        if (signed) {
+            throw new InvalidContractStateException("Contract has already been signed.");
+        }
+
+        signed = true;
+        signedBy = Validation.requireNonBlank(signer, "signer");
+        signedAt = LocalDate.now();
         status = ContractStatus.Active;
+    }
+
+    @Override
+    public boolean isSigned() {
+        return signed;
     }
 
     public void terminate(String notes) {
@@ -95,5 +113,8 @@ public class Contract {
         System.out.println("Value: " + value);
         System.out.println("Terms: " + terms);
         System.out.println("Notes: " + notes);
+        System.out.println("Signed: " + signed);
+        System.out.println("Signed By: " + (signedBy != null ? signedBy : "-"));
+        System.out.println("Signed At: " + (signedAt != null ? signedAt : "-"));
     }
 }

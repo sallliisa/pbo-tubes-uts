@@ -3,13 +3,16 @@ import java.time.LocalDate;
 
 import exceptions.InvalidInvoiceStateException;
 
-public class Invoice {
+public class Invoice implements Signable {
     private final int invoiceId;
     private final String title;
     private final LocalDate invoiceDate;
     private InvoiceStatus status;
     private String notes;
     private BigDecimal amount;
+    private boolean signed;
+    private String signedBy;
+    private LocalDate signedAt;
 
     public Invoice(int invoiceId, String title, LocalDate invoiceDate, String notes, BigDecimal amount) {
         this.invoiceId = invoiceId;
@@ -18,6 +21,7 @@ public class Invoice {
         this.status = InvoiceStatus.Draft;
         this.notes = Validation.requireNonBlank(notes, "notes");
         this.amount = Validation.requireNonNegative(amount, "amount");
+        this.signed = false;
     }
 
     public void generateFromTimesheet(Timesheet timesheet, BigDecimal rate) {
@@ -30,9 +34,31 @@ public class Invoice {
         status = InvoiceStatus.Generated;
     }
 
+    @Override
+    public void sign(String signer) {
+        if (status != InvoiceStatus.Generated) {
+            throw new InvalidInvoiceStateException("Only a generated invoice can be signed.");
+        }
+        if (signed) {
+            throw new InvalidInvoiceStateException("Invoice has already been signed.");
+        }
+
+        signed = true;
+        signedBy = Validation.requireNonBlank(signer, "signer");
+        signedAt = LocalDate.now();
+    }
+
+    @Override
+    public boolean isSigned() {
+        return signed;
+    }
+
     public void markSent() {
         if (status != InvoiceStatus.Generated) {
             throw new InvalidInvoiceStateException("Only a generated invoice can be marked as sent.");
+        }
+        if (!signed) {
+            throw new InvalidInvoiceStateException("Invoice must be signed before it can be sent.");
         }
         status = InvoiceStatus.Sent;
     }
@@ -71,5 +97,8 @@ public class Invoice {
         System.out.println("Status: " + status);
         System.out.println("Amount: " + amount);
         System.out.println("Notes: " + notes);
+        System.out.println("Signed: " + signed);
+        System.out.println("Signed By: " + (signedBy != null ? signedBy : "-"));
+        System.out.println("Signed At: " + (signedAt != null ? signedAt : "-"));
     }
 }

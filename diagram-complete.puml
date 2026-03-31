@@ -7,6 +7,11 @@
 skinparam classAttributeIconSize 0
 hide circle
 
+interface Signable {
+  +sign(signer: String): void
+  +isSigned(): boolean
+}
+
 class Contract {
   -contractId: int
   -title: String
@@ -18,9 +23,13 @@ class Contract {
   -endDate: LocalDate
   -value: BigDecimal
   -terms: String
+  -signed: boolean
+  -signedBy: String
+  -signedAt: LocalDate
   --
   +Contract(contractId: int, title: String, contractDate: LocalDate, notes: String, contractNumber: String, startDate: LocalDate, endDate: LocalDate, value: BigDecimal, terms: String)
-  +activate(): void
+  +sign(signer: String): void
+  +isSigned(): boolean
   +terminate(notes: String): void
   +renew(newEndDate: LocalDate, newValue: BigDecimal): void
   +isActive(onDate: LocalDate): boolean
@@ -88,9 +97,14 @@ class Invoice {
   -status: InvoiceStatus
   -notes: String
   -amount: BigDecimal
+  -signed: boolean
+  -signedBy: String
+  -signedAt: LocalDate
   --
   +Invoice(invoiceId: int, title: String, invoiceDate: LocalDate, notes: String, amount: BigDecimal)
   +generateFromTimesheet(timesheet: Timesheet, rate: BigDecimal): void
+  +sign(signer: String): void
+  +isSigned(): boolean
   +markSent(): void
   +markPaid(): void
   +cancel(notes: String): void
@@ -248,6 +262,8 @@ Department "0..1" --> "0..1" Employee : manager
 Department "1" o-- "0..*" Position : positions
 Employee <|-- PermanentEmployee
 Employee <|-- ContractEmployee
+Invoice ..|> Signable
+Contract ..|> Signable
 Employee "0..*" --> "1" Position : holds
 Client "1" o-- "0..*" Project : projects
 Employee "1" -- "0..*" ProjectAssignment : assignments

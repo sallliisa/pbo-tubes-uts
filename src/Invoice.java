@@ -26,18 +26,8 @@ public class Invoice {
         }
         Validation.requireNonNull(timesheet, "timesheet");
 
-        // WARN: Timesheet not expose getStatus() method, so we cannot check if it's approved before generating invoice.
-        // if (timesheet.getStatus() != TimesheetStatus.Approved) {
-        //     throw new InvalidInvoiceStateException("Cannot generate invoice from unapproved timesheet.");
-        // }
-
         amount = timesheet.getBillableHours().multiply(Validation.requireNonNegative(rate, "rate"));
         status = InvoiceStatus.Generated;
-    }
-
-    public void generateFromTimesheet(Timesheet timesheet, BigDecimal rate, String notes) {
-        this.notes = Validation.requireNonBlank(notes, "notes");
-        generateFromTimesheet(timesheet, rate);
     }
 
     public void markSent() {
@@ -64,6 +54,14 @@ public class Invoice {
 
     public BigDecimal getAmount() {
         return amount;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public void printInfo() {

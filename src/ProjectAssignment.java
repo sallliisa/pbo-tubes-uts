@@ -17,6 +17,17 @@ public class ProjectAssignment {
         this.roleOnProject = Validation.requireNonBlank(roleOnProject, "roleOnProject");
     }
 
+    public ProjectAssignment(
+        LocalDate assignmentStartDate,
+        LocalDate assignmentEndDate,
+        String roleOnProject,
+        Employee employee,
+        Project project
+    ) {
+        this(assignmentStartDate, assignmentEndDate, roleOnProject);
+        attach(employee, project);
+    }
+
     public void updateRole(String roleOnProject) {
         this.roleOnProject = Validation.requireNonBlank(roleOnProject, "roleOnProject");
     }

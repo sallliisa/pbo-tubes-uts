@@ -62,6 +62,15 @@ public class Project {
         this.status = Validation.requireNonNull(status, "status");
     }
 
+    public ProjectAssignment assignEmployee(Employee employee, String role) {
+        return assignEmployee(
+            employee,
+            role,
+            LocalDate.now(),
+            this.endDate
+        );
+    }
+
     public ProjectAssignment assignEmployee(
         Employee employee,
         String roleOnProject,

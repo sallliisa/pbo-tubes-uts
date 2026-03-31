@@ -33,6 +33,21 @@ public class App {
             consulting.addEmployee(manager);
             consulting.assignManager(manager);
 
+            ContractEmployee consultant = new ContractEmployee(
+                2001,
+                "John",
+                "Doe",
+                "john.doe@example.com",
+                LocalDate.of(2025, 1, 1),
+                new BigDecimal("7000.00"),
+                LocalDate.of(2026, 1, 31),
+                LocalDate.of(2026, 12, 1),
+                new BigDecimal("50.00")
+            );
+
+            consultant.assignPosition(seniorConsultant);
+            consulting.addEmployee(consultant);
+
             Client client = new Client(
                 501,
                 "Northwind Holdings",
@@ -61,6 +76,9 @@ public class App {
                 LocalDate.of(2026, 6, 30)
             );
 
+            // Example of method overloading
+            transformation.assignEmployee(consultant, "Consultant");
+
             Timesheet timesheet = manager.createTimesheet(
                 transformation,
                 LocalDate.of(2026, 3, 1),
@@ -81,6 +99,10 @@ public class App {
             System.out.println("Manager: " + manager.getFullName());
             System.out.println("Employees: " + consulting.getEmployeeCount());
             System.out.println("Timesheet hours: " + timesheet.getTotalHours());
+
+            // Example of method overriding
+            System.out.println("Manager compensation: " + manager.calculateCompensation());
+            System.out.println("Consultant compensation: " + consultant.calculateCompensation());
 
         } catch (DomainException e) {
             System.out.println("[DOMAIN ERROR] " + e.getMessage());

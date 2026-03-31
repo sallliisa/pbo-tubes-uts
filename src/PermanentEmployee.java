@@ -44,6 +44,6 @@ public class PermanentEmployee extends Employee {
 
     @Override
     public BigDecimal calculateCompensation() {
-        return getSalary();
+        return getSalary().add(new BigDecimal("1000"));
     }
 }

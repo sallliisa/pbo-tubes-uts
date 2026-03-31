@@ -136,11 +136,11 @@ public class Timesheet {
 
         for (TimesheetEntry entry : entries) {
             System.out.println(
-                "- Entry ID: " + entry.getEntryId()
-                    + ", Work Date: " + entry.getWorkDate()
-                    + ", Hours: " + entry.getHours()
-                    + ", Billable: " + entry.isBillable()
-                    + ", Notes: " + entry.getNotes()
+                "- Entry #" + entry.getEntryId() + "\n"
+                    + "  Date     : " + entry.getWorkDate() + "\n"
+                    + "  Hours    : " + entry.getHours() + "\n"
+                    + "  Billable : " + (entry.isBillable() ? "Yes" : "No") + "\n"
+                    + "  Notes    : " + entry.getNotes()
             );
         }
     }

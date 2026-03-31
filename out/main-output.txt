@@ -1,0 +1,220 @@
+
+=== Department and Position Setup ===
+Membuat departemen dan posisi agar data organisasi bisa dipakai di proses berikutnya
+
+Position ID: 1
+Title: Senior Consultant
+Level: Senior
+Min Salary: 6000.00
+Max Salary: 13000.00
+Description: Responsible for delivery quality, client communication, and team coordination
+
+Data departemen dan posisi sudah dibuat
+
+=== Employee Management ===
+Menambahkan pegawai, memperbarui profil, lalu menghubungkan pegawai ke departemen
+[FAIL] Memperbarui gaji manager ke 15000.00
+Pembaruan gaji gagal. Menggunakan gaji yang sesuai rentang posisi
+
+Employee ID: 1001
+Name: Alicia Tan
+Email: alicia.tan@scroogemckinsey.example
+Hire Date: 2022-01-10
+Salary: 9000.00
+Position: Senior Consultant
+Department: Business Consulting
+Assignments: 0
+Timesheets: 0
+Benefit Plan: Platinum
+Annual Leave Quota: 15
+
+Employee ID: 2001
+Name: John Doe
+Email: john.doe@contractor.example
+Hire Date: 2025-01-01
+Salary: 7000.00
+Position: Senior Consultant
+Department: Business Consulting
+Assignments: 0
+Timesheets: 0
+Contract Start Date: 2026-01-31
+Contract End Date: 2027-03-31
+
+Department ID: 1
+Name: Business Consulting
+Employee Count: 2
+Position Count: 1
+Manager: Alicia Tan
+
+Consultant contract duration (days): 424
+Consultant active on 2026-06-01: true
+Manager compensation: 10000.00
+Consultant compensation: 7000.00
+
+Data pegawai sudah dibuat dan relasinya ke departemen sudah tercatat
+Kegagalan di bagian ini terjadi karena: New salary is outside the assigned position range
+
+=== Client and Project Management ===
+Membuat data klien, membuat proyek, lalu menambahkan assignment pegawai ke proyek
+
+Client ID: 501
+Name: Northwind Holdings
+Industry: Retail
+Contact Name: Marcus Lee
+Contact Email: marcus.lee@northwindholdings.example
+Contact Phone: +62-21-555-0199
+Projects: 1
+
+Project ID: 7001
+Name: ERP Transformation
+Description: Replace legacy ERP and streamline finance operations
+Start Date: 2026-01-01
+End Date: 2026-07-31
+Status: Active
+Budget: 175000.00
+Client: Northwind Holdings
+Staffing Count: 2
+Contracts: 0
+Invoices: 0
+Timesheets: 0
+
+Assignment Start Date: 2026-01-01
+Assignment End Date: 2026-08-15
+Role on Project: Engagement Manager
+Employee: Alicia Tan
+Project: ERP Transformation
+
+Assignment Start Date: 2026-03-31
+Assignment End Date: 2026-07-31
+Role on Project: Consultant
+Employee: John Doe
+Project: ERP Transformation
+
+Manager assignment active on 2026-04-01: true
+Manager assignment duration (days): 226
+Client active projects: 1
+
+Data klien, proyek, dan assignment sudah dibuat
+
+=== Timesheet Workflow ===
+Membuat timesheet yang ditolak dan timesheet yang disetujui
+
+Timesheet ID: 1
+Period Start: 2026-03-01
+Period End: 2026-03-15
+Status: Rejected
+Employee: Alicia Tan
+Project: ERP Transformation
+Total Hours: 8.0
+Billable Hours: 8.0
+Rejection Reason: Clarify workshop outcomes before approval
+Entries:
+- Entry #1
+  Date     : 2026-03-02
+  Hours    : 8.0
+  Billable : Yes
+  Notes    : Kickoff workshop facilitation
+
+Timesheet pertama berhasil diproses sampai status rejected
+
+Membuat timesheet kedua yang akan dipakai untuk proses billing
+[FAIL] Menyetujui timesheet kedua sebelum submit
+Persetujuan timesheet gagal. Timesheet akan disubmit terlebih dahulu
+
+Timesheet ID: 2
+Period Start: 2026-03-16
+Period End: 2026-03-31
+Status: Approved
+Employee: John Doe
+Project: ERP Transformation
+Total Hours: 14.5
+Billable Hours: 14.5
+Entries:
+- Entry #3
+  Date     : 2026-03-18
+  Hours    : 8.0
+  Billable : Yes
+  Notes    : Discovery interviews
+- Entry #4
+  Date     : 2026-03-19
+  Hours    : 6.5
+  Billable : Yes
+  Notes    : Process mapping
+
+Approved timesheet hours: 14.5
+Approved billable hours: 14.5
+
+Timesheet kedua sudah approved. Data ini sekarang bisa dipakai untuk kontrak dan invoice
+Kegagalan di bagian ini terjadi karena: Only submitted timesheet can be approved
+
+=== Contract Workflow ===
+Membuat kontrak aktif, memperbarui nilainya, dan mengakhiri satu kontrak tambahan
+MSA active on 2026-05-01 before renewal: true
+
+Contract ID: 9001
+Title: Master Services Agreement
+Contract Date: 2025-12-20
+Status: Renewed
+Contract Number: MSA-2026-001
+Start Date: 2026-01-01
+End Date: 2027-06-30
+Value: 220000.00
+Terms: Monthly billing based on approved billable work
+Notes: Awaiting signature package
+Signed: true
+Signed By: Legal Counsel
+Signed At: 2026-03-31
+
+MSA value: 220000.00
+
+Kontrak utama sudah diperpanjang
+Menambahkan change order terpisah untuk proses terminasi kontrak
+
+Contract ID: 9002
+Title: Change Order
+Contract Date: 2026-02-01
+Status: Terminated
+Contract Number: CO-2026-003
+Start Date: 2026-02-15
+End Date: 2026-05-31
+Value: 25000.00
+Terms: Covers executive dashboard enhancement
+Notes: Scope absorbed into renewed master agreement
+Signed: true
+Signed By: Engagement Director
+Signed At: 2026-03-31
+
+Kontrak tambahan sudah diterminasi
+
+=== Invoice Workflow ===
+Membuat invoice dari timesheet yang approved
+
+Invoice ID: 8101
+Title: March Billing
+Invoice Date: 2026-04-01
+Status: Paid
+Amount: 2175.000
+Notes: Generated from approved March consultant timesheet
+Signed: true
+Signed By: Finance Lead
+Signed At: 2026-03-31
+
+Total billed amount for project: 2175.000
+
+Project ID: 7001
+Name: ERP Transformation
+Description: Replace legacy ERP and streamline finance operations
+Start Date: 2026-01-01
+End Date: 2026-07-31
+Status: Active
+Budget: 175000.00
+Client: Northwind Holdings
+Staffing Count: 2
+Contracts: 2
+Invoices: 1
+Timesheets: 2
+
+Invoice berhasil dibuat, dikirim, dan ditandai lunas
+
+
+=== End of Program ===

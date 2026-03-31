@@ -310,7 +310,7 @@ public class App {
             e.printStackTrace();
         } finally {
             System.out.println();
-            System.out.println("=== End of Program ===");
+            printSection("End of Program");
         }
     }
 

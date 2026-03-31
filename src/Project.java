@@ -81,9 +81,10 @@ public class Project {
         ProjectAssignment assignment = new ProjectAssignment(
             assignmentStartDate,
             assignmentEndDate,
-            roleOnProject
+            roleOnProject,
+            employee,
+            this
         );
-        assignment.attach(employee, this);
         staffing.add(assignment);
         employee.addAssignment(assignment);
         return assignment;

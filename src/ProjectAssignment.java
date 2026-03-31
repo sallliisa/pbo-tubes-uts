@@ -10,11 +10,17 @@ public class ProjectAssignment {
     private Employee employee;
     private Project project;
 
-    public ProjectAssignment(LocalDate assignmentStartDate, LocalDate assignmentEndDate, String roleOnProject) {
+    public ProjectAssignment(
+        LocalDate assignmentStartDate,
+        LocalDate assignmentEndDate,
+        String roleOnProject,
+        Project project
+    ) {
         Validation.requireDateOrder(assignmentStartDate, assignmentEndDate, "assignment dates");
         this.assignmentStartDate = assignmentStartDate;
         this.assignmentEndDate = assignmentEndDate;
         this.roleOnProject = Validation.requireNonBlank(roleOnProject, "roleOnProject");
+        this.project = Validation.requireNonNull(project, "project");
     }
 
     public ProjectAssignment(
@@ -24,8 +30,8 @@ public class ProjectAssignment {
         Employee employee,
         Project project
     ) {
-        this(assignmentStartDate, assignmentEndDate, roleOnProject);
-        attach(employee, project);
+        this(assignmentStartDate, assignmentEndDate, roleOnProject, project);
+        attachEmployee(employee);
     }
 
     public void updateRole(String roleOnProject) {
@@ -53,9 +59,8 @@ public class ProjectAssignment {
         return (int) ChronoUnit.DAYS.between(assignmentStartDate, assignmentEndDate);
     }
 
-    void attach(Employee employee, Project project) {
+    void attachEmployee(Employee employee) {
         this.employee = Validation.requireNonNull(employee, "employee");
-        this.project = Validation.requireNonNull(project, "project");
     }
 
     public void printInfo() {
